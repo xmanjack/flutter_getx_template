@@ -16,7 +16,7 @@ class PublicView extends GetView<PublicController> {
       body: Center(
           child: TextButton(
               onPressed: () {
-                Get.to(HomeView(), duration: Duration(milliseconds: 0));
+                Get.to(() => HomeView());
               },
               child: Text("Go to Home to View"))),
     );
