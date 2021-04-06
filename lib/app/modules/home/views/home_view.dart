@@ -6,60 +6,24 @@ import 'package:get/get.dart';
 
 import '../controllers/home_controller.dart';
 
-// class HomeView extends GetView<HomeController> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return
-//     Scaffold(
-//       appBar: AppBar(
-//         title: Text('HomeView'),
-//         centerTitle: true,
-//       ),
-//       body: Center(
-//         child: Text(
-//           'HomeView is working',
-//           style: TextStyle(fontSize: 20),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-class HomeView extends StatelessWidget {
+class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
-      builder: (controller) {
-        return Scaffold(
-          body: SafeArea(
-            child: IndexedStack(
-              index: controller.tabIndex,
-              children: [TechnologyView(), SettingView()],
-            ),
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            unselectedItemColor: Colors.black,
-            selectedItemColor: Colors.redAccent,
-            onTap: controller.changeTabIndex,
-            currentIndex: controller.tabIndex,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.white,
-            elevation: 0,
-            items: [
-              _bottomNavigationBarItem(
-                icon: Icons.science_sharp,
-                label: 'Technology',
-              ),
-              _bottomNavigationBarItem(
-                icon: Icons.settings_applications_sharp,
-                label: 'Settings',
-              ),
-            ],
-          ),
-        );
-      },
+    return Scaffold(
+      body: Obx(
+        () => IndexedStack(
+          children: [TechnologyView(), SettingView()],
+          // children: controller.menuPages,
+          index: controller.navMenuIndex(),
+        ),
+      ),
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          currentIndex: controller.navMenuIndex(),
+          items: controller.navMenuItems,
+          onTap: controller.navMenuIndex,
+        ),
+      ),
     );
   }
 
